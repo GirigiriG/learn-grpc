@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package greet;
+
 
 option go_package = "github.com/GirigiriG/learn-grpc/greet/proto";
 
