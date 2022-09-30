@@ -3,6 +3,7 @@ package main
 
 import (
 	"context"
+	"io"
 	"log"
 	"profile/proto/profile"
 
@@ -29,4 +30,31 @@ func main() {
 
 	log.Println(response.Message)
 
+	getProfileStream(c)
+}
+
+func getProfileStream(c profile.ProfileServiceClient) {
+	stream, err := c.CreateProfileStream(context.Background(), &profile.CreateRequest{
+		Name:    "Gideon",
+		Id:      123,
+		IsValid: false,
+	})
+
+	if err != nil {
+		log.Fatalf("error while calling the streaming api %v\n", err)
+	}
+
+	for {
+		msg, err := stream.Recv()
+		if err == io.EOF {
+			log.Println("Done reading")
+			break
+		}
+
+		if err != nil {
+			log.Fatalf("error occured while reading from stream %v", err)
+		}
+
+		log.Printf("message from the stream %v\n", msg.Message)
+	}
 }

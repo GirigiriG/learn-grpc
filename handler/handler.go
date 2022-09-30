@@ -4,20 +4,22 @@ import (
 	"context"
 	"fmt"
 	"profile/proto/profile"
+	"strconv"
+	"time"
 )
 
-type Profile struct {
+type Server struct {
 	profile.UnimplementedProfileServiceServer
 }
 
-func (p *Profile) Create(ctx context.Context, req *profile.CreateRequest) (*profile.CreateResponse, error) {
+func (p *Server) Create(ctx context.Context, req *profile.CreateRequest) (*profile.CreateResponse, error) {
 	return &profile.CreateResponse{Message: fmt.Sprintf("created profile for %s", req.GetName())}, nil
 }
 
-func CreateProfileStream(ctx context.Context, in *profile.CreateRequest) (profile.ProfileService_CreateProfileStreamClient, error) {
+func (p *Server) CreateProfileStream(x *profile.CreateRequest, stream profile.ProfileService_CreateProfileStreamServer) error {
 	for i := 0; i < 10; i++ {
-		//TODO: Figure out why stream.Send is not being imported
-		stream.Send("")
+		time.Sleep(time.Millisecond * 0)
+		stream.Send(&profile.CreateResponse{Message: strconv.Itoa(i)})
 	}
-	return nil, nil
+	return nil
 }

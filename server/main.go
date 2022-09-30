@@ -1,4 +1,4 @@
-//server
+// server
 package main
 
 import (
@@ -17,10 +17,9 @@ func main() {
 	}
 
 	server := grpc.NewServer()
-	profile.RegisterProfileServiceServer(server, &handler.Profile{})
+	profile.RegisterProfileServiceServer(server, &handler.Server{})
 
 	if err = server.Serve(lis); err != nil {
 		log.Fatalf("failed to start GRPC server %v", err)
 	}
-
 }
