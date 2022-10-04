@@ -33,6 +33,7 @@ func main() {
 	getProfileStream(c)
 }
 
+// Read stream from server
 func getProfileStream(c profile.ProfileServiceClient) {
 	stream, err := c.CreateProfileStream(context.Background(), &profile.CreateRequest{
 		Name:    "Gideon",
@@ -44,6 +45,7 @@ func getProfileStream(c profile.ProfileServiceClient) {
 		log.Fatalf("error while calling the streaming api %v\n", err)
 	}
 
+	// Loop and read server side stream until EOF
 	for {
 		msg, err := stream.Recv()
 		if err == io.EOF {

@@ -3,11 +3,6 @@ package profile;
 
 option go_package = "proto/profile;profile";
 
-service ProfileService {
-    rpc Create (CreateRequest) returns (CreateResponse);
-    rpc CreateProfileStream (CreateRequest) returns (stream CreateResponse);
-}
-
 message CreateRequest {
     string name = 1;
     bool is_valid = 2;
@@ -16,4 +11,9 @@ message CreateRequest {
 
 message CreateResponse {
     string message = 1;
+}
+
+service ProfileService {
+    rpc Create (CreateRequest) returns (CreateResponse);
+    rpc CreateProfileStream (CreateRequest) returns (stream CreateResponse);
 }

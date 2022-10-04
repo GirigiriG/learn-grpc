@@ -16,10 +16,13 @@ func (p *Server) Create(ctx context.Context, req *profile.CreateRequest) (*profi
 	return &profile.CreateResponse{Message: fmt.Sprintf("created profile for %s", req.GetName())}, nil
 }
 
-func (p *Server) CreateProfileStream(x *profile.CreateRequest, stream profile.ProfileService_CreateProfileStreamServer) error {
-	for i := 0; i < 10; i++ {
-		time.Sleep(time.Millisecond * 0)
-		stream.Send(&profile.CreateResponse{Message: strconv.Itoa(i)})
+// Send stream of data from server
+func (p *Server) CreateProfileStream(req *profile.CreateRequest, stream profile.ProfileService_CreateProfileStreamServer) error {
+	i := 0
+	for {
+		time.Sleep(time.Millisecond * 300)
+		stream.Send(&profile.CreateResponse{Message: strconv.Itoa(i) + " " + req.Name})
+		i++
 	}
 	return nil
 }

@@ -1,0 +1,20 @@
+syntax = "proto3";
+package book;
+
+option go_package = "book/book;book";
+import "google/protobuf/timestamp.proto";
+
+message BookRequest {
+    string title = 1;
+    string author = 2;
+    google.protobuf.Timestamp created_at = 3;
+    google.protobuf.Timestamp updated_at = 4;
+}
+
+message BookResponse {
+    BookRequest result = 1;
+}
+
+service BookService {
+    rpc CreateBook(BookRequest) returns (stream BookResponse);
+}
