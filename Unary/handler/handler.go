@@ -24,5 +24,4 @@ func (p *Server) CreateProfileStream(req *profile.CreateRequest, stream profile.
 		stream.Send(&profile.CreateResponse{Message: strconv.Itoa(i) + " " + req.Name})
 		i++
 	}
-	return nil
 }

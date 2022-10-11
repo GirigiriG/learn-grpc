@@ -1,4 +1,4 @@
-// server
+// Profile server
 package main
 
 import (
