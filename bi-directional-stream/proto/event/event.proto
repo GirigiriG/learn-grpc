@@ -1,0 +1,17 @@
+syntax = "proto3";
+package event;
+
+option go_package = "event/event;event";
+
+message Request {
+    string Id = 1;
+    string Title = 2;
+}
+
+message Response {
+    string Result = 1; 
+}
+
+service EventService{
+    rpc FullDuplexStream(stream Request) returns (stream Response);
+}
