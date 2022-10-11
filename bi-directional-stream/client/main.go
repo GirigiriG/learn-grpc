@@ -31,8 +31,8 @@ func callDuplexStream(c event.EventServiceClient) {
 	}
 
 	reqs := []*event.Request{
-		{Title: "Test one from client"},
-		{Title: "Test one from client"},
+		{Title: "Saving DevOps one Config At A Time "},
+		{Title: ""},
 		{Title: "Test one from client"},
 	}
 

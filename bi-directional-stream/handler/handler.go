@@ -1,3 +1,4 @@
+//Event handler
 package handler
 
 import (
@@ -29,6 +30,5 @@ func (s *Server) FullDuplexStream(stream event.EventService_FullDuplexStreamServ
 		if err != nil {
 			log.Fatalf("Error occurred while sending message to the client %v", err)
 		}
-
 	}
 }
