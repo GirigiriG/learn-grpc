@@ -2,16 +2,18 @@
 package handler
 
 import (
-	"event/proto/event"
+	pb "event/proto/event"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 	"io"
 	"log"
 )
 
 type Server struct {
-	event.UnimplementedEventServiceServer
+	pb.UnimplementedEventServiceServer
 }
 
-func (s *Server) FullDuplexStream(stream event.EventService_FullDuplexStreamServer) error {
+func (s *Server) FullDuplexStream(stream pb.EventService_FullDuplexStreamServer) error {
 	log.Println("Proccessing client stream from the server")
 
 	for {
@@ -24,9 +26,12 @@ func (s *Server) FullDuplexStream(stream event.EventService_FullDuplexStreamServ
 			log.Fatalf("An occured while reading client stream %v", err)
 		}
 
+		if req.Title == "" {
+			return status.Error(codes.InvalidArgument, "Title can not be null")
+		}
 		res := "Hello " + req.Title
 
-		err = stream.Send(&event.Response{Result: res})
+		err = stream.Send(&pb.Response{Result: res})
 		if err != nil {
 			log.Fatalf("Error occurred while sending message to the client %v", err)
 		}
