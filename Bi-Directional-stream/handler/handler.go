@@ -20,7 +20,7 @@ func (s *Server) FullDuplexStream(stream pb.EventService_FullDuplexStreamServer)
 		req, err := stream.Recv()
 		if err == io.EOF {
 			return nil
-		}
+		} 
 
 		if err != nil {
 			log.Fatalf("An occured while reading client stream %v", err)
